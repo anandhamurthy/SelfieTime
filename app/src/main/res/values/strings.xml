@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Selfie Time</string>
+
+    <string name="admob_app_id">ca-app-pub-5727072319538482~1971989628</string>
+    <string name="interstitial_full_screen">ca-app-pub-5727072319538482/5263780642</string>
+    <string name="banner_home_footer">ca-app-pub-5727072319538482/8328502659</string>
+</resources>

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "562334649489",
+    "firebase_url": "https://selfie-time-fc143.firebaseio.com",
+    "project_id": "selfie-time-fc143",
+    "storage_bucket": "selfie-time-fc143.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562334649489:android:4f4bdc861070d8c2",
+        "android_client_info": {
+          "package_name": "com.selfietime.selfietime"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562334649489-cj3nhaucsd1c1foqgk1jli73n92abvfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.selfietime.selfietime",
+            "certificate_hash": "0ca05ba0ccee1db510a895dc8e7050588d27fa47"
+          }
+        },
+        {
+          "client_id": "562334649489-jaqakehgsk1q8a233ifnj01mad5fnvl3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoFQIRVgjNqX6JV8X4ZZz4OKaeqLNTlb4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562334649489-jaqakehgsk1q8a233ifnj01mad5fnvl3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".GreetingActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/greeting_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/image_placeholder"
+            app:layout_constraintDimensionRatio="1:1" />
+
+    </android.support.constraint.ConstraintLayout>
+
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/greeting_glitters"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/greeting_greet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/nunito_bold"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="30dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:id="@+id/greeting_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/nunito_bold"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="30dp" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

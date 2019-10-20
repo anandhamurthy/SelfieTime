@@ -4,8 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,14 +25,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.selfietime.selfietime.InterstitialAdActivity;
-import com.selfietime.selfietime.MainActivity;
 import com.selfietime.selfietime.Model.Comment;
 import com.selfietime.selfietime.Model.User;
-import com.selfietime.selfietime.NewSelfieActivity;
 import com.selfietime.selfietime.R;
 import com.selfietime.selfietime.CommentsActivity;
-import com.selfietime.selfietime.Model.Comment;
-import com.selfietime.selfietime.Model.User;
 
 import java.util.List;
 

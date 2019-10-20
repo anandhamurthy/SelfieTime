@@ -7,13 +7,39 @@
     android:background="@color/colorWhite"
     tools:context=".CommentsActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comments_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/comments_bottom_bar"
+        android:layout_below="@id/comments_app_bar"
+        android:visibility="invisible" />
+
+
+    <RelativeLayout
+        android:id="@+id/no_comments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/comments_bottom_bar">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunito_bold"
+            android:gravity="center"
+            android:text="No Comments Yet."
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/comments_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/comments_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,34 +71,8 @@
 
             </RelativeLayout>
 
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-
-
-    <RelativeLayout
-        android:id="@+id/no_comments"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/comments_bottom_bar">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/nunito_bold"
-            android:gravity="center"
-            android:text="No Comments Yet."
-            android:textColor="@color/colorAccent"
-            android:textSize="20dp" />
-
-    </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/comments_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/comments_bottom_bar"
-        android:layout_below="@id/comments_app_bar"
-        android:visibility="invisible" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
         android:id="@+id/comments_bottom_bar"

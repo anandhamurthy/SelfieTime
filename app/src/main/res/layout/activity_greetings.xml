@@ -6,13 +6,37 @@
     android:background="@android:color/white"
     tools:context=".GreetingActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/greetings_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/greetings_app_bar"
+        android:visibility="invisible" />
+
+    <RelativeLayout
+        android:id="@+id/no_greetings"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunito_bold"
+            android:gravity="center"
+            android:text="No Greetings Yet."
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+
+
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/greetings_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/greetings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -44,31 +68,7 @@
 
             </RelativeLayout>
 
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
-        android:id="@+id/no_greetings"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/nunito_bold"
-            android:gravity="center"
-            android:text="No Greetings Yet."
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
-
-    </RelativeLayout>
-
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/greetings_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/greetings_app_bar"
-        android:visibility="invisible" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
 </RelativeLayout>

@@ -1,15 +1,16 @@
 package com.selfietime.selfietime;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,6 +22,7 @@ public class CompetitionActivity extends AppCompatActivity {
     private DatabaseReference mCompetitionDatabase;
 
     private String title;
+    private AdView mAdView;
 
     private ImageView Competitions_Back, Competitions_Image;
     private RelativeLayout No_Competitions;
@@ -32,6 +34,11 @@ public class CompetitionActivity extends AppCompatActivity {
 
         mCompetitionDatabase = FirebaseDatabase.getInstance().getReference().child("Competition");
         mCompetitionDatabase.keepSynced(true);
+
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mAdView.loadAd(adRequest);
 
         Intent intent = getIntent();
         title = intent.getStringExtra("title");
@@ -67,6 +74,30 @@ public class CompetitionActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 
 }

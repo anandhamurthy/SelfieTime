@@ -5,9 +5,12 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -34,7 +37,6 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.selfietime.selfietime.Model.User;
 import com.theartofdev.edmodo.cropper.CropImage;
-import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.util.HashMap;
 
@@ -52,6 +54,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     private FirebaseUser mFirebaseUser;
     private String mCurrentUserId;
     private Uri mImageUri;
+    private String Frm;
     private StorageTask mUploadTask;
     private StorageReference mProfileImageStorage;
     private DatabaseReference mUsersDatabase;
@@ -60,7 +63,6 @@ public class ProfileEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
-
         Change_Image = findViewById(R.id.profile_edit_change_profile_image_text);
         Profile_Edit_Back = findViewById(R.id.profile_edit_back);
         Profile_Edit_Profile_Image = findViewById(R.id.profile_edit_profile_image);
@@ -133,7 +135,6 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CropImage.activity()
                         .setAspectRatio(1, 1)
-                        .setCropShape(CropImageView.CropShape.OVAL)
                         .start(ProfileEditActivity.this);
             }
         });
@@ -143,7 +144,6 @@ public class ProfileEditActivity extends AppCompatActivity {
             public void onClick(View view) {
                 CropImage.activity()
                         .setAspectRatio(1, 1)
-                        .setCropShape(CropImageView.CropShape.OVAL)
                         .start(ProfileEditActivity.this);
             }
         });

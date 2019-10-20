@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,19 +18,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.selfietime.selfietime.AddStoryActivity;
 import com.selfietime.selfietime.Fragments.APIService;
 import com.selfietime.selfietime.Fragments.ProfileFragment;
 import com.selfietime.selfietime.MainActivity;
 import com.selfietime.selfietime.Model.User;
-import com.selfietime.selfietime.NewSelfieActivity;
 import com.selfietime.selfietime.Notification.Client;
 import com.selfietime.selfietime.Notification.Data;
 import com.selfietime.selfietime.Notification.MyResponse;
@@ -101,7 +99,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ImageViewHolde
                     ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new ProfileFragment()).commit();
                 } else if (isWish) {
-                    CharSequence options[] = new CharSequence[]{"Add Wish"};
+                    CharSequence[] options = new CharSequence[]{"Add Wish"};
                     final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
                     builder.setTitle("Options");

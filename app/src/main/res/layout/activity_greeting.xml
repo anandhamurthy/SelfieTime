@@ -7,7 +7,7 @@
     android:background="@color/colorWhite"
     tools:context=".GreetingActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -18,7 +18,7 @@
             android:src="@drawable/image_placeholder"
             app:layout_constraintDimensionRatio="1:1" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <nl.dionsegijn.konfetti.KonfettiView
         android:id="@+id/greeting_glitters"

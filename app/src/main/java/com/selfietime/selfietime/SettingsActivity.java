@@ -2,8 +2,9 @@ package com.selfietime.selfietime;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -45,7 +46,6 @@ public class SettingsActivity extends AppCompatActivity {
         Settings_Private_Policy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(SettingsActivity.this, PrivacyPolicyActivity.class));
             }
         });
@@ -53,7 +53,6 @@ public class SettingsActivity extends AppCompatActivity {
         Settings_Open_Sources_Library.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(SettingsActivity.this, OpenSourcesActivity.class));
             }
         });

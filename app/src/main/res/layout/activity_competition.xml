@@ -4,16 +4,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     tools:context=".CompetitionActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_home_footer"></com.google.android.gms.ads.AdView>
+
+    <RelativeLayout
+        android:id="@+id/no_competitions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunito_bold"
+            android:gravity="center"
+            android:text="No Competitions Yet."
+            android:textColor="@color/colorPrimary"
+            android:textSize="20dp" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/competition_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/competition_app_bar"
+        android:src="@drawable/start"
+        android:visibility="invisible"
+        app:layout_constraintDimensionRatio="1:1" />
+
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/competition_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/competition_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -45,33 +81,8 @@
 
             </RelativeLayout>
 
-        </android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
-        android:id="@+id/no_competitions"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/nunito_bold"
-            android:gravity="center"
-            android:text="No Competitions Yet."
-            android:textColor="@color/colorPrimary"
-            android:textSize="20dp" />
-
-    </RelativeLayout>
-
-
-    <ImageView
-        android:id="@+id/competition_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/competition_app_bar"
-        android:src="@drawable/start"
-        android:visibility="invisible"
-        app:layout_constraintDimensionRatio="1:1" />
 
 </RelativeLayout>

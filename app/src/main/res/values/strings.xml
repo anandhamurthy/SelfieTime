@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Selfie Time</string>
 
-    <string name="admob_app_id">ca-app-pub-5727072319538482~1971989628</string>
-    <string name="interstitial_full_screen">ca-app-pub-5727072319538482/5263780642</string>
-    <string name="banner_home_footer">ca-app-pub-5727072319538482/8328502659</string>
+    <string name="admob_app_id">ca-app-pub-5548121687304740/9448214063</string>
+    <string name="interstitial_full_screen">ca-app-pub-5548121687304740/6822050725</string>
+    <string name="banner_home_footer">ca-app-pub-5548121687304740/7993879207</string>
+
+    <string name="label_brush">Brush</string>
+    <string name="label_emoji">Emoji</string>
+    <string name="label_sticker">Sticker</string>
+    <string name="label_eraser">Eraser</string>
+    <string name="label_text">Text</string>
+    <string name="label_filter">Filter</string>
+    <string name="label_adjust">Adjust</string>
 </resources>

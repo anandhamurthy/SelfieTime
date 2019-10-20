@@ -4,17 +4,22 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.ads.AdListener;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -84,11 +89,51 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+//        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+//            @Override
+//            public void onInitializationComplete(InitializationStatus initializationStatus) {
+//            }
+//        });
 
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .build();
         mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                // Code to be executed when an ad request fails.
+
+            }
+
+            @Override
+            public void onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+
+            @Override
+            public void onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            @Override
+            public void onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            @Override
+            public void onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+        });
+
         mBottomNavigation = findViewById(R.id.bottom_navigation);
         mBottomNavigation.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
@@ -119,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             mImageUri = result.getUri();
 
 
-            CharSequence options[] = new CharSequence[]{"Add Selfie"};
+            CharSequence[] options = new CharSequence[]{"Add Selfie"};
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
@@ -129,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int position) {
 
                     if (position == 0) {
-                        Intent SelfieIntent = new Intent(MainActivity.this, NewSelfieActivity.class);
+                        Intent SelfieIntent = new Intent(MainActivity.this, EditorActivity.class);
                         SelfieIntent.putExtra("image_url", mImageUri.toString());
                         startActivity(SelfieIntent);
                     }
@@ -143,6 +188,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     @Override
     public void onPause() {

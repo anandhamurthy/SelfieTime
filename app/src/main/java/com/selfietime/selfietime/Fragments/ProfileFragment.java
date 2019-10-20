@@ -3,10 +3,10 @@ package com.selfietime.selfietime.Fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -109,14 +109,18 @@ public class ProfileFragment extends Fragment {
         Profile_Privacy = view.findViewById(R.id.profile_privacy);
 
         Profile_Selfies_List.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
+        StaggeredGridLayoutManager mLayoutManager =
+                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        //LinearLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
         Profile_Selfies_List.setLayoutManager(mLayoutManager);
         postList = new ArrayList<>();
         myFotosAdapter = new MyPhotoAdapter(getContext(), postList);
         Profile_Selfies_List.setAdapter(myFotosAdapter);
 
         Profile_Saved_Photos_List.setHasFixedSize(true);
-        LinearLayoutManager mLayoutManagers = new GridLayoutManager(getContext(), 3);
+        StaggeredGridLayoutManager mLayoutManagers =
+                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+        //LinearLayoutManager mLayoutManagers = new GridLayoutManager(getContext(), 3);
         Profile_Saved_Photos_List.setLayoutManager(mLayoutManagers);
         postList_saves = new ArrayList<>();
         myFotosAdapter_saves = new MyPhotoAdapter(getContext(), postList_saves);
@@ -179,7 +183,8 @@ public class ProfileFragment extends Fragment {
         Profile_Image_Edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), ProfileEditActivity.class));
+                Intent SelfieIntent = new Intent(getContext(), ProfileEditActivity.class);
+                startActivity(SelfieIntent);
             }
         });
 

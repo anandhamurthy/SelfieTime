@@ -7,9 +7,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 
-import com.selfietime.selfietime.Model.Notification;
+import androidx.annotation.RequiresApi;
 
 public class OreoNotification extends ContextWrapper {
 

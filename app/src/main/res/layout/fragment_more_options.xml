@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/profile_edit_image_background"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/pull"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/pull" />
+
+
+    <TextView
+        android:id="@+id/edit_profile"
+        style="@style/ActionItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pull"
+        android:layout_marginTop="8dp"
+        android:drawableStart="@drawable/edit_profile"
+        android:drawableLeft="@drawable/edit_profile"
+        android:drawableTint="@color/colorBlack"
+        android:fontFamily="@font/nunito"
+        android:text="Edit Profile"
+        android:textColor="@color/colorBlack"
+
+        />
+
+    <TextView
+        android:id="@+id/open_source_library"
+        style="@style/ActionItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_profile"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/open_souce"
+        android:drawableLeft="@drawable/open_souce"
+        android:drawableTint="@color/colorBlack"
+        android:fontFamily="@font/nunito"
+        android:text="Open Source Library"
+        android:textColor="@color/colorBlack"
+
+        />
+
+    <TextView
+        android:id="@+id/private_policy"
+        style="@style/ActionItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/open_source_library"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/private_policy"
+        android:drawableLeft="@drawable/private_policy"
+        android:drawableTint="@color/colorBlack"
+        android:fontFamily="@font/nunito"
+        android:text="Private Policy"
+        android:textColor="@color/colorBlack"
+
+        />
+
+    <TextView
+        android:id="@+id/logout"
+        style="@style/ActionItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/private_policy"
+        android:layout_marginTop="5dp"
+        android:drawableStart="@drawable/logout"
+        android:drawableLeft="@drawable/logout"
+        android:drawableTint="@color/colorBlack"
+        android:fontFamily="@font/nunito"
+        android:text="Logout"
+        android:textColor="@color/colorBlack"
+
+        />
+
+
+</RelativeLayout>

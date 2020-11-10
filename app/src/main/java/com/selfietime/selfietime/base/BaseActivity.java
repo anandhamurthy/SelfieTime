@@ -16,9 +16,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-/**
- * Created by Burhanuddin Rashid on 1/17/2018.
- */
 
 public class BaseActivity extends AppCompatActivity {
 

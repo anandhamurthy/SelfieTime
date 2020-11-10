@@ -1,12 +1,8 @@
 package com.selfietime.selfietime.Adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +24,14 @@ import com.selfietime.selfietime.StoryActivity;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder> {
 
-    private Context mContext;
-    private List<Story> mStory;
+    private final Context mContext;
+    private final List<Story> mStory;
 
     public StoryAdapter(Context mContext, List<Story> mStory) {
         this.mContext = mContext;

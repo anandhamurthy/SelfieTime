@@ -62,7 +62,7 @@ public class FollowingsActivity extends AppCompatActivity {
         mFollowingsList.setHasFixedSize(true);
         mFollowingsList.setLayoutManager(new LinearLayoutManager(this));
         userList = new ArrayList<>();
-        mUserAdapter = new UserAdapter(this, userList, false, true);
+        mUserAdapter = new UserAdapter(this, userList, false);
         mFollowingsList.setAdapter(mUserAdapter);
 
         idList = new ArrayList<>();

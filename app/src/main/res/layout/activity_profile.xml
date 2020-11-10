@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".ProfileActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/profile_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/profile_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/profile_edit_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        app:srcCompat="@drawable/back" />
+
+                    <TextView
+                        android:id="@+id/profile_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/profile_edit_back"
+                        android:fontFamily="@font/nunito_bold"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/profile_app_bar"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:id="@+id/top_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:layout_margin="10dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            app:cardCornerRadius="10dp">
+
+
+                            <ImageView
+                                android:id="@+id/cover_image"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/image_placeholder"
+                                android:scaleType="centerCrop" />
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/profile_layout"
+                        android:layout_width="170dp"
+                        android:layout_height="170dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="100dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_image"
+                            android:layout_width="170dp"
+                            android:layout_height="170dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/profile_placeholder" />
+
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/profile_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_layout"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:fontFamily="@font/nunito_bold"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="27dp" />
+
+                    <TextView
+                        android:id="@+id/profile_bio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_name"
+                        android:layout_margin="2dp"
+                        android:fontFamily="@font/nunito"
+                        android:gravity="center"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="16dp" />
+
+                    <Button
+                        android:id="@+id/profile_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_bio"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center"
+                        android:layout_margin="5dp"
+                        android:backgroundTint="@color/colorBlack"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="Follow"
+                        android:textColor="@color/white"
+                        android:textSize="14dp" />
+
+                    <LinearLayout
+                        android:id="@+id/profile_layout_card_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile_button"
+                        android:layout_centerHorizontal="true"
+                        android:layout_margin="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
+
+                        <LinearLayout
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_bold"
+                                android:text="Selfies"
+                                android:textColor="@android:color/black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/profile_wishes_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito"
+                                android:gravity="center"
+                                android:paddingTop="5dp"
+                                android:text="0"
+                                android:textColor="@android:color/black"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_bold"
+                                android:text="Followers"
+                                android:textColor="@android:color/black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/profile_followers_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito"
+                                android:gravity="center"
+                                android:paddingTop="5dp"
+                                android:text="0"
+                                android:textColor="@android:color/black"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito_bold"
+                                android:text="Followings"
+                                android:textColor="@android:color/black"
+                                android:textSize="16dp" />
+
+                            <TextView
+                                android:id="@+id/profile_followings_count"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/nunito"
+                                android:gravity="center"
+                                android:paddingTop="5dp"
+                                android:text="0"
+                                android:textColor="@android:color/black"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/profile_privacy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/profile_layout_card_view"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/private_image"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:padding="10dp"
+                            android:src="@drawable/block" />
+
+
+                        <TextView
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="5dp"
+                            android:fontFamily="@font/nunito_bold"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:text="This Account is Private Account"
+                            android:textColor="@color/colorPrimaryDark"
+                            android:textSize="14dp" />
+
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/tabs_main_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/profile_layout_card_view"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.tabs.TabLayout
+                            android:id="@+id/tabs"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            app:tabBackground="@color/white"
+                            app:tabGravity="fill"
+                            app:tabIndicatorColor="@android:color/transparent"
+                            app:tabMode="fixed"
+                            app:tabPaddingEnd="0dp"
+                            app:tabPaddingStart="0dp"
+                            app:tabSelectedTextColor="@color/colorBlack"
+                            app:tabTextColor="@color/colorGrey" />
+
+                        <androidx.viewpager.widget.ViewPager
+                            android:id="@+id/pager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/tabs" />
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+

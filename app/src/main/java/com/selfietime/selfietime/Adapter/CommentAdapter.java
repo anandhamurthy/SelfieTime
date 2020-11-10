@@ -1,12 +1,8 @@
 package com.selfietime.selfietime.Adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,19 +20,23 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.selfietime.selfietime.CommentsActivity;
 import com.selfietime.selfietime.InterstitialAdActivity;
 import com.selfietime.selfietime.Model.Comment;
 import com.selfietime.selfietime.Model.User;
 import com.selfietime.selfietime.R;
-import com.selfietime.selfietime.CommentsActivity;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ImageViewHolder> {
 
-    private Context mContext;
-    private List<Comment> mComment;
-    private String postid;
+    private final Context mContext;
+    private final List<Comment> mComment;
+    private final String postid;
 
     private FirebaseUser firebaseUser;
 

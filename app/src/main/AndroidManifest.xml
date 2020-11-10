@@ -2,6 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.selfietime.selfietime">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:name=".SelfieTime"
         android:allowBackup="true"
@@ -9,38 +17,36 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".EditCoverActivity" />
+        <activity android:name=".EditProfileActivity" /> <!-- <activity android:name=".LoginActivity"></activity> -->
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".EditorActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".StartActivity">
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".ProfileEditActivity" />
-        <activity android:name=".RegisterActivity" />
         <activity android:name=".NewSelfieActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
         <activity android:name=".CommentsActivity" />
-        <activity android:name=".SettingsActivity" />
         <activity android:name=".FollowersActivity" />
         <activity android:name=".FollowingsActivity" />
         <activity android:name=".ViewsActivity" />
         <activity android:name=".LikesActivity" />
         <activity android:name=".StoryActivity" />
         <activity android:name=".AddStoryActivity" />
-        <activity android:name=".WishActivity" />
-        <activity android:name=".GreetingActivity" />
-        <activity android:name=".GreetingsActivity" />
-        <activity android:name=".CompetitionActivity" />
         <activity android:name=".PrivacyPolicyActivity" />
         <activity android:name=".InterstitialAdActivity" />
         <activity android:name=".OpenSourcesActivity" />
@@ -63,14 +69,5 @@
             </intent-filter>
         </service>
     </application>
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" />
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

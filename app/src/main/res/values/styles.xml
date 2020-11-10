@@ -6,6 +6,13 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -17,6 +24,27 @@
         <item name="colorControlActivated">#FFFFFF</item>
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+
+    <style name="ActionItem">
+        <item name="android:textSize">16dp</item>
+        <item name="android:drawablePadding">24dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="tabStyle" parent="@android:style/TextAppearance">
+        <item name="android:fontFamily">@font/nunito</item>
+    </style>
+
+    <style name="BottomNavigationViewTextStyle">
+        <item name="android:fontFamily">@font/nunito</item>
     </style>
 
 

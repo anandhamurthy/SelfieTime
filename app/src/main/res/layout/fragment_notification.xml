@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".Fragments.NotificationFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -32,13 +33,13 @@
         android:id="@+id/notification_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground">
+        android:background="@color/colorPrimary">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/notification_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground">
+            android:background="@color/colorPrimary">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -51,7 +52,7 @@
                     android:layout_marginStart="10dp"
                     android:fontFamily="@font/nunito_bold"
                     android:text="Notifications"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorWhite"
                     android:textSize="18sp" />
 
             </RelativeLayout>

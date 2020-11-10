@@ -1,15 +1,9 @@
 package com.selfietime.selfietime.Adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,8 +33,7 @@ import com.google.firebase.storage.StorageReference;
 import com.pedromassango.doubleclick.DoubleClick;
 import com.pedromassango.doubleclick.DoubleClickListener;
 import com.selfietime.selfietime.CommentsActivity;
-import com.selfietime.selfietime.Fragments.APIService;
-import com.selfietime.selfietime.Fragments.ProfileFragment;
+import com.selfietime.selfietime.Notification.APIService;
 import com.selfietime.selfietime.LikesActivity;
 import com.selfietime.selfietime.Model.Selfie;
 import com.selfietime.selfietime.Model.User;
@@ -49,22 +42,25 @@ import com.selfietime.selfietime.Notification.Data;
 import com.selfietime.selfietime.Notification.MyResponse;
 import com.selfietime.selfietime.Notification.Sender;
 import com.selfietime.selfietime.Notification.Token;
+import com.selfietime.selfietime.ProfileActivity;
 import com.selfietime.selfietime.R;
 
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.RecyclerView;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class SelfieAdapter extends RecyclerView.Adapter<SelfieAdapter.ImageViewHolder> {
 
     APIService apiService;
-    private Context mContext;
-    private List<Selfie> mSelfies;
+    private final Context mContext;
+    private final List<Selfie> mSelfies;
     private FirebaseAuth mAuth;
     private DatabaseReference mSelfieDatabase, mSavesDatabase, mLikesDatabase, mNotificationDatabase, mCommentsDatabase, mUsersDatabase;
     private FirebaseUser mFirebaseUser;
@@ -170,24 +166,32 @@ public class SelfieAdapter extends RecyclerView.Adapter<SelfieAdapter.ImageViewH
         holder.Selfie_Profile_Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-                editor.putString("profileid", selfie.getUser_id());
-                editor.apply();
 
-                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).commit();
+                Intent intent = new Intent(mContext, ProfileActivity.class);
+                intent.putExtra("user_id", selfie.getUser_id());
+                mContext.startActivity(intent);
+//                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+//                editor.putString("profileid", selfie.getUser_id());
+//                editor.apply();
+//
+//                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                        new ProfileFragment()).commit();
             }
         });
 
         holder.Selfie_User_Name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-                editor.putString("profileid", selfie.getUser_id());
-                editor.apply();
 
-                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).commit();
+                Intent intent = new Intent(mContext, ProfileActivity.class);
+                intent.putExtra("user_id", selfie.getUser_id());
+                mContext.startActivity(intent);
+//                SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+//                editor.putString("profileid", selfie.getUser_id());
+//                editor.apply();
+//
+//                ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                        new ProfileFragment()).commit();
             }
         });
 

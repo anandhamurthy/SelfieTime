@@ -62,7 +62,7 @@ public class ViewsActivity extends AppCompatActivity {
         Views_List.setHasFixedSize(true);
         Views_List.setLayoutManager(new LinearLayoutManager(this));
         userList = new ArrayList<>();
-        mUserAdapter = new UserAdapter(this, userList, false, false);
+        mUserAdapter = new UserAdapter(this, userList, false);
         Views_List.setAdapter(mUserAdapter);
 
         idList = new ArrayList<>();

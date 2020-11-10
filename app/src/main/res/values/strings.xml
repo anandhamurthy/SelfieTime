@@ -12,4 +12,23 @@
     <string name="label_text">Text</string>
     <string name="label_filter">Filter</string>
     <string name="label_adjust">Adjust</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_notification">Notification</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_add_selfie">Add</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="open_drawer">Open drawer</string>
+    <string name="close_drawer">Close drawer</string>
+    <string name="reload">Reload</string>
+    <string name="add_spot_to_first">Add spot to first</string>
+    <string name="add_spot_to_last">Add spot to last</string>
+    <string name="remove_spot_from_first">Remove spot from first</string>
+    <string name="remove_spot_from_last">Remove spot from last</string>
+    <string name="replace_first_spot">Replace first spot</string>
+    <string name="swap_first_for_last">Swap first for last</string>
 </resources>

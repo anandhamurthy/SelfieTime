@@ -1,14 +1,15 @@
 package com.selfietime.selfietime.Model;
 
 public class User {
-    public String user_name, profile_image, user_id, bio, date_of_birth, email_id, place, terms, gender, device_token;
+    public String user_name, profile_image, cover_image, user_id, bio, date_of_birth, email_id, place, terms, gender, device_token;
 
     public User() {
     }
 
-    public User(String user_name, String profile_image, String user_id, String bio, String date_of_birth, String email_id, String place, String terms, String gender, String device_token) {
+    public User(String user_name, String profile_image, String cover_image, String user_id, String bio, String date_of_birth, String email_id, String place, String terms, String gender, String device_token) {
         this.user_name = user_name;
         this.profile_image = profile_image;
+        this.cover_image = cover_image;
         this.user_id = user_id;
         this.bio = bio;
         this.date_of_birth = date_of_birth;
@@ -33,6 +34,14 @@ public class User {
 
     public void setProfile_image(String profile_image) {
         this.profile_image = profile_image;
+    }
+
+    public String getCover_image() {
+        return cover_image;
+    }
+
+    public void setCover_image(String cover_image) {
+        this.cover_image = cover_image;
     }
 
     public String getUser_id() {

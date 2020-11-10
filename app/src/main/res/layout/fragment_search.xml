@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/colorWhite"
     android:layout_height="match_parent"
     tools:context=".Fragments.SearchFragment">
 
@@ -15,34 +17,20 @@
         android:id="@+id/search_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground">
+        android:background="@color/colorPrimary">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground">
+            android:background="@color/colorPrimary">
 
-            <ImageView
-                android:id="@+id/search_search_icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:src="@drawable/search_icon" />
-
-            <EditText
-                android:id="@+id/search_edit_text"
+            <androidx.appcompat.widget.SearchView
                 android:layout_width="match_parent"
+                android:id="@+id/search_view"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="30dp"
-                android:layout_toEndOf="@id/search_search_icon"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/nunito_bold"
-                android:hint="Search"
-                android:textColor="@color/colorBlack"
-                android:textSize="18sp" />
+                android:layoutMode="opticalBounds"
+                app:queryHint="Search your selfiemates" />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

@@ -21,12 +21,14 @@
             android:id="@+id/single_notification_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold" />
+            android:fontFamily="@font/nunito_bold"
+            android:textColor="@color/colorBlack" />
 
         <TextView
             android:id="@+id/single_notification_comment"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/nunito"
+            android:textColor="@color/colorBlack"
             android:layout_height="wrap_content"
             android:maxLines="5" />
 

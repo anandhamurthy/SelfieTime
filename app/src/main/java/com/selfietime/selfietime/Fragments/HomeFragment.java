@@ -1,6 +1,5 @@
 package com.selfietime.selfietime.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -9,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -22,10 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.selfietime.selfietime.Adapter.SelfieAdapter;
 import com.selfietime.selfietime.Adapter.StoryAdapter;
-import com.selfietime.selfietime.CompetitionActivity;
-import com.selfietime.selfietime.GreetingsActivity;
 import com.selfietime.selfietime.Model.Selfie;
 import com.selfietime.selfietime.Model.Story;
+import com.selfietime.selfietime.Notification.APIService;
 import com.selfietime.selfietime.Notification.Client;
 import com.selfietime.selfietime.Notification.Token;
 import com.selfietime.selfietime.R;
@@ -48,12 +45,12 @@ public class HomeFragment extends Fragment {
     private List<Story> storyList;
     private List<String> followingList;
     private ProgressBar Home_Progress_Bar;
-    private ImageView Home_Greetings, Home_Context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
 
         Home_Selfie_List = view.findViewById(R.id.home_selfie_list);
         Home_Selfie_List.setHasFixedSize(true);
@@ -75,8 +72,6 @@ public class HomeFragment extends Fragment {
         Home_Story_List.setAdapter(storyAdapter);
 
         Home_Progress_Bar = view.findViewById(R.id.home_progress_bar);
-        Home_Greetings = view.findViewById(R.id.home_greetings);
-        Home_Context = view.findViewById(R.id.home_context);
 
         mAuth = FirebaseAuth.getInstance();
         mFirebaseUser = mAuth.getCurrentUser();
@@ -94,26 +89,6 @@ public class HomeFragment extends Fragment {
         mStoryDatabase = FirebaseDatabase.getInstance().getReference("Story");
         mStoryDatabase.keepSynced(true);
 
-        Home_Greetings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getActivity(), GreetingsActivity.class);
-                intent.putExtra("title", "Greetings");
-                startActivity(intent);
-
-            }
-        });
-        Home_Context.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(getActivity(), CompetitionActivity.class);
-                intent.putExtra("title", "Competitions");
-                startActivity(intent);
-
-            }
-        });
         checkFollowing();
 
         return view;

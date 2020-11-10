@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_marginBottom="5dp"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite">
 
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_margin="15dp"
-        android:src="@drawable/more" />
+        app:srcCompat="@drawable/more" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/nunito_bold"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorBlack"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -56,7 +57,7 @@
                 android:id="@+id/selfie_liked"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:src="@drawable/like"
+                app:srcCompat="@drawable/like"
                 android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -72,35 +73,46 @@
 
             <ImageView
                 android:id="@+id/selfie_likes"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/dislike" />
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/dislike" />
+
+            <TextView
+                android:id="@+id/selfie_likes_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/selfie_likes"
+                android:fontFamily="@font/nunito"
+                android:textColor="@color/colorBlack"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/selfie_comments"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/selfie_likes"
-                android:src="@drawable/comment" />
+                android:layout_toEndOf="@id/selfie_likes_count"
+                app:srcCompat="@drawable/comment" />
+
+            <TextView
+                android:id="@+id/selfie_comments_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/selfie_comments"
+                android:fontFamily="@font/nunito"
+                android:textColor="@color/colorBlack" />
 
             <ImageView
                 android:id="@+id/selfie_save"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignParentEnd="true"
-                android:src="@drawable/post_unsave" />
+                app:srcCompat="@drawable/post_unsave" />
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/selfie_likes_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="@font/nunito"
-            android:textColor="@color/colorPrimaryDark"
-            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/selfie_description"
@@ -108,17 +120,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:fontFamily="@font/nunito"
-            android:textColor="@color/colorPrimaryDark" />
+            android:textColor="@color/colorBlack" />
 
-        <TextView
-            android:id="@+id/selfie_comments_count"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp"
-            android:fontFamily="@font/nunito"
-            android:textColor="@color/colorAccent" />
 
     </LinearLayout>
 

@@ -12,7 +12,7 @@
 
     <TextView
         android:id="@+id/user_name"
-        android:layout_width="wrap_content"
+        android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginStart="5dp"
@@ -24,8 +24,9 @@
         android:orientation="vertical"
         android:singleLine="true"
         android:text="Username"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="18dp"
+        android:layout_toLeftOf="@+id/user_follow_button"
+        android:textColor="@color/colorBlack"
+        android:textSize="14dp"
         android:textStyle="bold" />
 
 
@@ -38,8 +39,8 @@
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/user_name"
         android:backgroundTint="@color/colorBlack"
-        android:fontFamily="@font/nunito"
+        android:fontFamily="@font/nunito_bold"
         android:text="Follow"
-        android:textColor="@android:color/white"
-        android:textSize="18dp" />
+        android:textColor="@color/colorWhite"
+        android:textSize="12dp" />
 </RelativeLayout>

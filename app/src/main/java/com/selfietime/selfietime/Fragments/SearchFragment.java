@@ -1,11 +1,15 @@
 package com.selfietime.selfietime.Fragments;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -27,15 +31,15 @@ import com.selfietime.selfietime.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements UserAdapter.SearchAdapterListener {
 
     private RecyclerView Search_List;
     private UserAdapter userAdapter;
     private List<User> userList;
 
+    private SearchView Search_View;
+
     private DatabaseReference mUsersDatabase;
-    private EditText Search_Edit_Text;
-    private ImageView Search_Button;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,60 +51,50 @@ public class SearchFragment extends Fragment {
         mUsersDatabase.keepSynced(true);
 
         Search_List = view.findViewById(R.id.search_list);
-        Search_Edit_Text = view.findViewById(R.id.search_edit_text);
+        Search_View = view.findViewById(R.id.search_view);
 
         Search_List.setHasFixedSize(true);
         Search_List.setLayoutManager(new LinearLayoutManager(getContext()));
         userList = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext(), userList, true, false);
+        userAdapter = new UserAdapter(getContext(), userList, true);
         Search_List.setAdapter(userAdapter);
 
-        Search_Button = view.findViewById(R.id.search_search_icon);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        Search_View.setSearchableInfo(searchManager
+                .getSearchableInfo(getActivity().getComponentName()));
+        Search_View.setMaxWidth(Integer.MAX_VALUE);
 
-        Search_Button.setOnClickListener(new View.OnClickListener() {
+        Search_View.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onQueryTextSubmit(String query) {
+                userAdapter.getFilter().filter(query);
+                return false;
+            }
 
-
+            @Override
+            public boolean onQueryTextChange(String query) {
+                userAdapter.getFilter().filter(query);
+                return false;
             }
         });
 
-        Search_Edit_Text.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                searchUsers(charSequence.toString().toUpperCase());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        //  readUsers();
+        readUsers();
 
 
         return view;
     }
 
-    private void searchUsers(String s) {
-        Query query = FirebaseDatabase.getInstance().getReference("Users").orderByChild("user_name").startAt(s).endAt(s + "\uf8ff");
+    private void readUsers() {
 
-        query.addValueEventListener(new ValueEventListener() {
+        mUsersDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                 userList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     User user = snapshot.getValue(User.class);
                     userList.add(user);
-                }
 
+                }
 
                 userAdapter.notifyDataSetChanged();
             }
@@ -112,28 +106,8 @@ public class SearchFragment extends Fragment {
         });
     }
 
-    private void readUsers() {
+    @Override
+    public void onSearchSelected(User user) {
 
-        mUsersDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (Search_Edit_Text.getText().toString().equals("")) {
-                    userList.clear();
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        User user = snapshot.getValue(User.class);
-
-                        userList.add(user);
-
-                    }
-
-                    userAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 }

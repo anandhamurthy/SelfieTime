@@ -61,7 +61,7 @@ public class LikesActivity extends AppCompatActivity {
         mLikesList.setHasFixedSize(true);
         mLikesList.setLayoutManager(new LinearLayoutManager(this));
         userList = new ArrayList<>();
-        mUserAdapter = new UserAdapter(this, userList, false, false);
+        mUserAdapter = new UserAdapter(this, userList, false);
         mLikesList.setAdapter(mUserAdapter);
 
         idList = new ArrayList<>();

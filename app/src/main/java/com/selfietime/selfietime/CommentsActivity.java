@@ -2,13 +2,11 @@ package com.selfietime.selfietime;
 
 import android.content.Intent;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 import android.widget.EditText;
@@ -27,7 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.selfietime.selfietime.Adapter.CommentAdapter;
-import com.selfietime.selfietime.Fragments.APIService;
+import com.selfietime.selfietime.Notification.APIService;
 import com.selfietime.selfietime.Model.Comment;
 import com.selfietime.selfietime.Model.User;
 import com.selfietime.selfietime.Notification.Client;

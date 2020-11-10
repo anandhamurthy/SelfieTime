@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/image_placeholder" />
+        app:srcCompat="@drawable/image_placeholder" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,7 +80,7 @@
             android:layout_gravity="center"
             android:background="@drawable/circle"
             android:padding="5dp"
-            android:src="@drawable/views" />
+            app:srcCompat="@drawable/views" />
 
         <TextView
             android:id="@+id/seen_number"
@@ -104,6 +105,6 @@
         android:layout_margin="10dp"
         android:background="@drawable/circle"
         android:padding="5dp"
-        android:src="@drawable/delete" />
+        app:srcCompat="@drawable/delete" />
 
 </RelativeLayout>

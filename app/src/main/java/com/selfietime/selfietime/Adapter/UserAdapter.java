@@ -1,18 +1,17 @@
 package com.selfietime.selfietime.Adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +23,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.selfietime.selfietime.Fragments.APIService;
-import com.selfietime.selfietime.Fragments.ProfileFragment;
+import com.selfietime.selfietime.Notification.APIService;
 import com.selfietime.selfietime.MainActivity;
 import com.selfietime.selfietime.Model.User;
 import com.selfietime.selfietime.Notification.Client;
@@ -33,9 +31,10 @@ import com.selfietime.selfietime.Notification.Data;
 import com.selfietime.selfietime.Notification.MyResponse;
 import com.selfietime.selfietime.Notification.Sender;
 import com.selfietime.selfietime.Notification.Token;
+import com.selfietime.selfietime.ProfileActivity;
 import com.selfietime.selfietime.R;
-import com.selfietime.selfietime.WishActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -44,24 +43,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ImageViewHolder> {
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ImageViewHolder> implements Filterable {
 
     APIService apiService;
-    private Context mContext;
+    private final Context mContext;
     private List<User> mUsers;
-    private boolean isFragment;
-    private boolean isWish;
-    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private String mCurrentUserId = mAuth.getCurrentUser().getUid();
+    private final boolean isFragment;
+    private final List<User> mDefaultUsersList;
+    private final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final String mCurrentUserId = mAuth.getCurrentUser().getUid();
 
 
-    public UserAdapter(Context context, List<User> users, boolean isFragment, boolean isWish) {
+    public UserAdapter(Context context, List<User> users, boolean isFragment) {
         mContext = context;
         mUsers = users;
         this.isFragment = isFragment;
-        this.isWish = isWish;
+        this.mDefaultUsersList = users;
     }
 
     @NonNull
@@ -92,31 +89,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ImageViewHolde
             @Override
             public void onClick(View view) {
                 if (isFragment) {
-                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
-                    editor.putString("profileid", user.getUser_id());
-                    editor.apply();
-
-                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new ProfileFragment()).commit();
-                } else if (isWish) {
-                    CharSequence[] options = new CharSequence[]{"Add Wish"};
-                    final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-
-                    builder.setTitle("Options");
-                    builder.setItems(options, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int position) {
-
-                            if (position == 0) {
-                                Intent SelfieIntent = new Intent(mContext, WishActivity.class);
-                                SelfieIntent.putExtra("user_id", user.getUser_id());
-                                mContext.startActivity(SelfieIntent);
-                            }
-
-                        }
-                    });
-
-                    builder.show();
+//                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+//                    editor.putString("profileid", user.getUser_id());
+//                    editor.apply();
+//
+//                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                            new ProfileFragment()).commit();
+                    Intent intent = new Intent(mContext, ProfileActivity.class);
+                    intent.putExtra("user_id", user.getUser_id());
+                    mContext.startActivity(intent);
                 } else {
                     Intent intent = new Intent(mContext, MainActivity.class);
                     intent.putExtra("publisherid", user.getUser_id());
@@ -245,6 +226,39 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ImageViewHolde
         });
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString().toLowerCase();
+                if (charString.isEmpty()) {
+                    mUsers = mDefaultUsersList;
+                } else {
+                    List<User> filteredList = new ArrayList<>();
+                    for (User row : mDefaultUsersList) {
+
+                        if (row.getUser_name().toLowerCase().contains(charString)) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    mUsers = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = mUsers;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mUsers = (ArrayList<User>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
     public class ImageViewHolder extends RecyclerView.ViewHolder {
 
         public TextView User_Name;
@@ -258,5 +272,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ImageViewHolde
             User_Profile_Image = itemView.findViewById(R.id.user_profile_image);
             User_Follow = itemView.findViewById(R.id.user_follow_button);
         }
+    }
+
+    public interface SearchAdapterListener {
+        void onSearchSelected(User user);
     }
 }

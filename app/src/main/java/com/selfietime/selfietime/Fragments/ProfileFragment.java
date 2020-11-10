@@ -1,21 +1,34 @@
 package com.selfietime.selfietime.Fragments;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,47 +36,34 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.selfietime.selfietime.Adapter.MyPhotoAdapter;
 import com.selfietime.selfietime.FollowingsActivity;
-import com.selfietime.selfietime.ProfileEditActivity;
 import com.selfietime.selfietime.FollowersActivity;
 import com.selfietime.selfietime.Model.Selfie;
 import com.selfietime.selfietime.Model.User;
-import com.selfietime.selfietime.SettingsActivity;
 import com.selfietime.selfietime.R;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 import static android.content.Context.MODE_PRIVATE;
 
 public class ProfileFragment extends Fragment {
 
-    private ImageView Profile_Image_Edit, Profile_Menu, Profile_Selfies, Profile_Saved_Photos;
-    private TextView Profile_Wishes_Count, Profile_Followings_Count, Profile_Followers_Count, Profile_User_Bio, Profile_User_Name, Profile_Toolbar_User_Name;
+
+    protected TabLayout Profile_Tab_Layout;
+    protected ViewPager Profile_Pager;
     private CircleImageView Profile_Image;
     private Button Profile_Button;
-    private RecyclerView Profile_Selfies_List, Profile_Saved_Photos_List;
+    RelativeLayout top_layout, tabs_main_layout;
 
-    private LinearLayout Profile_Bottom_Bar;
     private LinearLayout Profile_Privacy;
 
-    private List<String> mySaves;
-
     private FirebaseUser mFirebaseUser;
-    private String profileid;
     private String mCurrentUserId;
     private DatabaseReference mFollowersDatabase, mUsersDatabase, mSelfieDatabase, mSavedDatabase, mFollowingDatabase;
-
-    private MyPhotoAdapter myFotosAdapter;
-    private List<Selfie> postList;
-
-    private MyPhotoAdapter myFotosAdapter_saves;
-    private List<Selfie> postList_saves;
+    private ImageView Profile_Menu, Profile_Cover_Image;
+    private TextView Profile_Selfie_Count, Profile_Followings_Count, Profile_Followers_Count, Profile_User_Bio, Profile_User_Name, Profile_Toolbar_User_Name;
+    private ImageButton Profile_Edit_Image, Profile_Edit_Cover_Image;
+    private ViewPagerAdapter viewPagerAdapter;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -73,13 +73,10 @@ public class ProfileFragment extends Fragment {
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mCurrentUserId = mFirebaseUser.getUid();
 
-        SharedPreferences prefs = getContext().getSharedPreferences("PREFS", MODE_PRIVATE);
-        profileid = prefs.getString("profileid", "none");
-
-        mFollowersDatabase = FirebaseDatabase.getInstance().getReference("Follow").child(profileid).child("followers");
+        mFollowersDatabase = FirebaseDatabase.getInstance().getReference("Follow").child(mCurrentUserId).child("followers");
         mFollowersDatabase.keepSynced(true);
 
-        mFollowingDatabase = FirebaseDatabase.getInstance().getReference("Follow").child(profileid).child("following");
+        mFollowingDatabase = FirebaseDatabase.getInstance().getReference("Follow").child(mCurrentUserId).child("following");
         mFollowingDatabase.keepSynced(true);
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -91,146 +88,98 @@ public class ProfileFragment extends Fragment {
         mSavedDatabase = FirebaseDatabase.getInstance().getReference().child("Saves");
         mSavedDatabase.keepSynced(true);
 
-        Profile_Image_Edit = view.findViewById(R.id.profile_image_edit);
+        top_layout = view.findViewById(R.id.top_layout);
+        tabs_main_layout = view.findViewById(R.id.tabs_main_layout);
+
+        Profile_Tab_Layout = view.findViewById(R.id.tabs);
+        Profile_Pager = view.findViewById(R.id.pager);
+
         Profile_Menu = view.findViewById(R.id.profile_menu);
-        Profile_Selfies = view.findViewById(R.id.profile_selfies);
-        Profile_Saved_Photos = view.findViewById(R.id.profile_saved_photos);
-        Profile_Wishes_Count = view.findViewById(R.id.profile_wishes_count);
+        Profile_Selfie_Count = view.findViewById(R.id.profile_wishes_count);
         Profile_Followers_Count = view.findViewById(R.id.profile_followers_count);
         Profile_Followings_Count = view.findViewById(R.id.profile_followings_count);
         Profile_Image = view.findViewById(R.id.profile_image);
-        Profile_Selfies_List = view.findViewById(R.id.profile_selfies_list);
-        Profile_Saved_Photos_List = view.findViewById(R.id.profile_saved_photos_list);
+        Profile_Cover_Image = view.findViewById(R.id.cover_image);
+
+        Profile_Edit_Image = view.findViewById(R.id.profile_edit_profile);
+        Profile_Edit_Cover_Image = view.findViewById(R.id.profile_edit_profile_cover);
         Profile_Button = view.findViewById(R.id.profile_button);
         Profile_User_Name = view.findViewById(R.id.profile_name);
         Profile_User_Bio = view.findViewById(R.id.profile_bio);
         Profile_Toolbar_User_Name = view.findViewById(R.id.profile_user_name);
-        Profile_Bottom_Bar = view.findViewById(R.id.profile_bottom_bar);
         Profile_Privacy = view.findViewById(R.id.profile_privacy);
 
-        Profile_Selfies_List.setHasFixedSize(true);
-        StaggeredGridLayoutManager mLayoutManager =
-                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        //LinearLayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
-        Profile_Selfies_List.setLayoutManager(mLayoutManager);
-        postList = new ArrayList<>();
-        myFotosAdapter = new MyPhotoAdapter(getContext(), postList);
-        Profile_Selfies_List.setAdapter(myFotosAdapter);
+        Profile_Pager.setOffscreenPageLimit(2);
+        viewPagerAdapter = new ViewPagerAdapter(getResources(), getChildFragmentManager());
+        Profile_Pager.setAdapter(viewPagerAdapter);
+        Profile_Tab_Layout.setupWithViewPager(Profile_Pager);
 
-        Profile_Saved_Photos_List.setHasFixedSize(true);
-        StaggeredGridLayoutManager mLayoutManagers =
-                new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-        //LinearLayoutManager mLayoutManagers = new GridLayoutManager(getContext(), 3);
-        Profile_Saved_Photos_List.setLayoutManager(mLayoutManagers);
-        postList_saves = new ArrayList<>();
-        myFotosAdapter_saves = new MyPhotoAdapter(getContext(), postList_saves);
-        Profile_Saved_Photos_List.setAdapter(myFotosAdapter_saves);
+        setTabIcons();
 
-        Profile_Selfies_List.setVisibility(View.VISIBLE);
-        Profile_Saved_Photos_List.setVisibility(View.GONE);
+        UserInformation(mCurrentUserId);
+        getFollowers();
+        getSelfies(mCurrentUserId);
+        Profile_Button.setVisibility(View.GONE);
 
-        if (!profileid.equals(mCurrentUserId)) {
+        ViewTreeObserver observer = top_layout.getViewTreeObserver();
+        observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
-            UserInformation(profileid);
-            getFollowers(profileid);
-            getSelfies(profileid);
-            getPhotos(profileid);
-            getPhotoSaved(profileid);
+            @Override
+            public void onGlobalLayout() {
 
-            mUsersDatabase.child(profileid).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
+                final int height = top_layout.getMeasuredHeight();
 
-                    User user = dataSnapshot.getValue(User.class);
-                    if (user.getTerms().equals("True")) {
-                        Profile_Bottom_Bar.setVisibility(View.GONE);
-                        Profile_Privacy.setVisibility(View.VISIBLE);
-                        Profile_Followers_Count.setEnabled(false);
-                        Profile_Followings_Count.setEnabled(false);
-                        Profile_Selfies_List.setVisibility(View.GONE);
-                        Profile_Saved_Photos_List.setVisibility(View.GONE);
-                    } else {
-                        Profile_Privacy.setVisibility(View.GONE);
-                        Profile_Bottom_Bar.setVisibility(View.VISIBLE);
-                        Profile_Followers_Count.setEnabled(true);
-                        Profile_Followings_Count.setEnabled(true);
-                        Profile_Selfies_List.setVisibility(View.VISIBLE);
-                        Profile_Saved_Photos_List.setVisibility(View.VISIBLE);
+                top_layout.getViewTreeObserver().removeGlobalOnLayoutListener(
+                        this);
+
+                ViewTreeObserver observer = tabs_main_layout.getViewTreeObserver();
+                observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+                    @Override
+                    public void onGlobalLayout() {
+
+                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) tabs_main_layout.getLayoutParams();
+                        params.height = tabs_main_layout.getMeasuredHeight() + height;
+                        tabs_main_layout.setLayoutParams(params);
+                        tabs_main_layout.getViewTreeObserver().removeGlobalOnLayoutListener(
+                                this);
+
                     }
-                }
+                });
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
-                }
-            });
 
-            checkFollow();
-            Profile_Button.setVisibility(View.GONE);
-            Profile_Saved_Photos.setVisibility(View.VISIBLE);
-            Profile_Image_Edit.setVisibility(View.GONE);
-            Profile_Menu.setVisibility(View.GONE);
-
-        } else {
-            UserInformation(mCurrentUserId);
-            getFollowers(mCurrentUserId);
-            getSelfies(mCurrentUserId);
-            getPhotos(mCurrentUserId);
-            getPhotoSaved(mCurrentUserId);
-            Profile_Button.setVisibility(View.GONE);
-        }
-
-        Profile_Image_Edit.setOnClickListener(new View.OnClickListener() {
+        Profile_Edit_Image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent SelfieIntent = new Intent(getContext(), ProfileEditActivity.class);
-                startActivity(SelfieIntent);
+                AddImageFragment addPhotoBottomDialogFragment =
+                        new AddImageFragment("profile_image");
+                addPhotoBottomDialogFragment.show(getFragmentManager(),
+                        AddImageFragment.TAG);
+
             }
         });
 
-        Profile_Button.setOnClickListener(new View.OnClickListener() {
+        Profile_Edit_Cover_Image.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String btn = Profile_Button.getText().toString();
-
-                if (btn.equals("Follow")) {
-
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(mCurrentUserId)
-                            .child("following").child(profileid).setValue(true);
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
-                            .child("followers").child(mCurrentUserId).setValue(true);
-                    addNotification();
-                } else if (btn.equals("Following")) {
-
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(mCurrentUserId)
-                            .child("following").child(profileid).removeValue();
-                    FirebaseDatabase.getInstance().getReference().child("Follow").child(profileid)
-                            .child("followers").child(mCurrentUserId).removeValue();
-
-                }
+            public void onClick(View v) {
+                AddImageFragment addPhotoBottomDialogFragment =
+                        new AddImageFragment("cover_image");
+                addPhotoBottomDialogFragment.show(getFragmentManager(),
+                        AddImageFragment.TAG);
             }
         });
+
 
         Profile_Menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), SettingsActivity.class));
-            }
-        });
-
-        Profile_Selfies.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Profile_Selfies_List.setVisibility(View.VISIBLE);
-                Profile_Saved_Photos_List.setVisibility(View.GONE);
-            }
-        });
-
-        Profile_Saved_Photos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Profile_Selfies_List.setVisibility(View.GONE);
-                Profile_Saved_Photos_List.setVisibility(View.VISIBLE);
+                MoreOptionsFragment moreOptionsFragment =
+                        new MoreOptionsFragment();
+                moreOptionsFragment.show(getFragmentManager(),
+                        AddImageFragment.TAG);
             }
         });
 
@@ -239,7 +188,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), FollowersActivity.class);
-                intent.putExtra("id", profileid);
+                intent.putExtra("id", mCurrentUserId);
                 intent.putExtra("title", "Followers");
                 startActivity(intent);
             }
@@ -249,7 +198,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), FollowingsActivity.class);
-                intent.putExtra("id", profileid);
+                intent.putExtra("id", mCurrentUserId);
                 intent.putExtra("title", "Following");
                 startActivity(intent);
             }
@@ -258,18 +207,57 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void addNotification() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(profileid);
+    private void setTabIcons() {
 
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("userid", mCurrentUserId);
-        hashMap.put("text", "started following you");
-        hashMap.put("postid", "");
-        hashMap.put("ispost", false);
+        View view1 = LayoutInflater.from(getActivity()).inflate(R.layout.single_profile_tab, null);
+        ImageView imageView1 = view1.findViewById(R.id.image);
+        imageView1.setImageDrawable(getResources().getDrawable(R.drawable.selfies));
+        Profile_Tab_Layout.getTabAt(0).setCustomView(view1);
 
-        reference.push().setValue(hashMap);
+        View view2 = LayoutInflater.from(getActivity()).inflate(R.layout.single_profile_tab, null);
+        ImageView imageView2 = view2.findViewById(R.id.image);
+        imageView2.setImageDrawable(getResources().getDrawable(R.drawable.saved));
+        Profile_Tab_Layout.getTabAt(1).setCustomView(view2);
+
+
+        Profile_Tab_Layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                View v = tab.getCustomView();
+                ImageView image = v.findViewById(R.id.image);
+                switch (tab.getPosition()) {
+                    case 0:
+                        image.setImageDrawable(getResources().getDrawable(R.drawable.selfies));
+                        break;
+
+                    case 1:
+                        image.setImageDrawable(getResources().getDrawable(R.drawable.saved));
+                        break;
+                }
+                tab.setCustomView(v);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                View v = tab.getCustomView();
+                ImageView image = v.findViewById(R.id.image);
+                switch (tab.getPosition()) {
+                    case 0:
+
+                        image.setImageDrawable(getResources().getDrawable(R.drawable.selfies));
+                        break;
+                    case 1:
+                        image.setImageDrawable(getResources().getDrawable(R.drawable.saved));
+                        break;
+                }
+                tab.setCustomView(v);
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
-
     private void UserInformation(String profileid) {
         mUsersDatabase.child(profileid).addValueEventListener(new ValueEventListener() {
             @Override
@@ -279,6 +267,9 @@ public class ProfileFragment extends Fragment {
                 }
                 User user = dataSnapshot.getValue(User.class);
 
+                if (user.getCover_image() != null) {
+                    Glide.with(getContext()).load(user.getCover_image()).into(Profile_Cover_Image);
+                }
                 Glide.with(getContext()).load(user.getProfile_image()).into(Profile_Image);
                 Profile_User_Name.setText(user.getUser_name());
                 Profile_Toolbar_User_Name.setText(user.getUser_name());
@@ -298,25 +289,7 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void checkFollow() {
-        mFollowingDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(profileid).exists()) {
-                    Profile_Button.setText("Following");
-                } else {
-                    Profile_Button.setText("Follow");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void getFollowers(String profileid) {
+    private void getFollowers() {
         mFollowersDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -353,7 +326,7 @@ public class ProfileFragment extends Fragment {
                         i++;
                     }
                 }
-                Profile_Wishes_Count.setText("" + i);
+                Profile_Selfie_Count.setText("" + i);
             }
 
             @Override
@@ -363,67 +336,45 @@ public class ProfileFragment extends Fragment {
         });
     }
 
-    private void getPhotos(final String profileid) {
-        mSelfieDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                postList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Selfie selfie = snapshot.getValue(Selfie.class);
-                    if (selfie.getUser_id().equals(profileid)) {
-                        postList.add(selfie);
-                    }
-                }
-                Collections.reverse(postList);
-                myFotosAdapter.notifyDataSetChanged();
+
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
+
+        private final Resources resources;
+
+        SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+
+
+        public ViewPagerAdapter(final Resources resources, FragmentManager fm) {
+            super(fm);
+            this.resources = resources;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            final Fragment result;
+            switch (position) {
+                case 0:
+                    result = new UserSelfiesFragment(mCurrentUserId);
+                    break;
+
+                case 1:
+                    result = new UserSavedSelfiesFragment(mCurrentUserId);
+                    break;
+
+                default:
+                    result = null;
+                    break;
             }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+            return result;
+        }
 
-            }
-        });
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+
     }
 
-    private void getPhotoSaved(String profileid) {
-        mySaves = new ArrayList<>();
-        mSavedDatabase.child(profileid).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    mySaves.add(snapshot.getKey());
-                }
-                readSaves();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void readSaves() {
-        mSelfieDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                postList_saves.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Selfie selfie = snapshot.getValue(Selfie.class);
-
-                    for (String id : mySaves) {
-                        if (selfie.getSelfie_id().equals(id)) {
-                            postList_saves.add(selfie);
-                        }
-                    }
-                }
-                myFotosAdapter_saves.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 }

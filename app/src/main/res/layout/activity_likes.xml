@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/colorWhite"
     tools:context=".FollowersActivity">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -12,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/likes_app_bar"
         android:layout_margin="2dp"
-        android:visibility="invisible"></androidx.recyclerview.widget.RecyclerView>
+        android:visibility="invisible" />
 
 
     <RelativeLayout
@@ -36,13 +37,13 @@
         android:id="@+id/likes_app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground">
+        android:background="@color/colorPrimary">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/likes_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground">
+            android:background="@color/colorPrimary">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -55,7 +56,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/back" />
+                    app:srcCompat="@drawable/back" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -65,7 +66,7 @@
                     android:layout_toEndOf="@id/likes_back"
                     android:fontFamily="@font/nunito_bold"
                     android:text="Likes"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorWhite"
                     android:textSize="18sp" />
 
             </RelativeLayout>

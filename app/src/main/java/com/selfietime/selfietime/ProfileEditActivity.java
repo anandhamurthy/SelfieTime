@@ -42,8 +42,8 @@ import java.util.HashMap;
 
 public class ProfileEditActivity extends AppCompatActivity {
 
-    private ImageView Profile_Edit_Back, Profile_Edit_Profile_Image;
-    private TextView Profile_Edit_Email_Address, Change_Image;
+    private ImageView Profile_Edit_Back;
+    private TextView Profile_Edit_Email_Address;
     private FloatingActionButton Profile_Edit_Save;
     private EditText Profile_Edit_User_Name, Profile_Edit_Place, Profile_Edit_Bio, Profile_Edit_DOB;
     private EditText Profile_Edit_Gender;
@@ -53,19 +53,14 @@ public class ProfileEditActivity extends AppCompatActivity {
 
     private FirebaseUser mFirebaseUser;
     private String mCurrentUserId;
-    private Uri mImageUri;
-    private String Frm;
-    private StorageTask mUploadTask;
-    private StorageReference mProfileImageStorage;
     private DatabaseReference mUsersDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
-        Change_Image = findViewById(R.id.profile_edit_change_profile_image_text);
+
         Profile_Edit_Back = findViewById(R.id.profile_edit_back);
-        Profile_Edit_Profile_Image = findViewById(R.id.profile_edit_profile_image);
         Profile_Edit_Save = findViewById(R.id.profile_edit_save);
         Profile_Edit_User_Name = findViewById(R.id.profile_edit_user_name);
         Profile_Edit_Place = findViewById(R.id.profile_edit_place);
@@ -77,7 +72,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         Profile_Privacy = findViewById(R.id.profile_privacy);
         mFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         mCurrentUserId = mFirebaseUser.getUid();
-        mProfileImageStorage = FirebaseStorage.getInstance().getReference("profile_images");
 
         mUsersDatabase = FirebaseDatabase.getInstance().getReference("Users").child(mCurrentUserId);
         mUsersDatabase.addValueEventListener(new ValueEventListener() {
@@ -90,12 +84,7 @@ public class ProfileEditActivity extends AppCompatActivity {
                 Profile_Edit_Gender.setText(user.getGender());
                 Profile_Edit_DOB.setText(user.getDate_of_birth());
                 Profile_Edit_Email_Address.setText(user.getEmail_id());
-                if (user.getTerms().equals("True")) {
-                    Profile_Privacy.setChecked(true);
-                } else {
-                    Profile_Privacy.setChecked(false);
-                }
-                Glide.with(getApplicationContext()).load(user.getProfile_image()).into(Profile_Edit_Profile_Image);
+                Profile_Privacy.setChecked(user.getTerms().equals("True"));
             }
 
             @Override
@@ -115,6 +104,7 @@ public class ProfileEditActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                Toast.makeText(ProfileEditActivity.this, "fe", Toast.LENGTH_SHORT).show();
                 if (Profile_Privacy.isChecked()) {
                     Privacy = "True";
                 } else {
@@ -130,23 +120,6 @@ public class ProfileEditActivity extends AppCompatActivity {
             }
         });
 
-        Change_Image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CropImage.activity()
-                        .setAspectRatio(1, 1)
-                        .start(ProfileEditActivity.this);
-            }
-        });
-
-        Profile_Edit_Profile_Image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CropImage.activity()
-                        .setAspectRatio(1, 1)
-                        .start(ProfileEditActivity.this);
-            }
-        });
     }
 
     private void UpdateProfile(String name, String gender, String place, String dob, String terms, String bio) {
@@ -163,75 +136,6 @@ public class ProfileEditActivity extends AppCompatActivity {
         mUsersDatabase.updateChildren(map);
 
         Toast.makeText(ProfileEditActivity.this, "Successfully Updated!", Toast.LENGTH_SHORT).show();
-    }
-
-    private String getFileExtension(Uri uri) {
-        ContentResolver cR = getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(cR.getType(uri));
-    }
-
-    private void UploadImage() {
-        final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Uploading");
-        pd.show();
-        if (mImageUri != null) {
-            final StorageReference fileReference = mProfileImageStorage.child(System.currentTimeMillis()
-                    + "." + getFileExtension(mImageUri));
-
-            mUploadTask = fileReference.putFile(mImageUri);
-            mUploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                @Override
-                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                    if (!task.isSuccessful()) {
-                        throw task.getException();
-                    }
-                    return fileReference.getDownloadUrl();
-                }
-            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    if (task.isSuccessful()) {
-                        Uri downloadUri = task.getResult();
-                        String miUrlOk = downloadUri.toString();
-
-                        HashMap<String, Object> map1 = new HashMap<>();
-                        map1.put("profile_image", "" + miUrlOk);
-                        mUsersDatabase.updateChildren(map1);
-
-                        pd.dismiss();
-
-                    } else {
-                        Toast.makeText(ProfileEditActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(ProfileEditActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        } else {
-            Toast.makeText(ProfileEditActivity.this, "No image selected", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-
-
-            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-            mImageUri = result.getUri();
-
-            UploadImage();
-
-        } else {
-            Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private boolean isEmpty(String name) {

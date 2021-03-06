@@ -5,6 +5,6 @@ Anytime Anywhere
   <img alt="Android app on Google Play" src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" />
 </a>
 
-![Sociality](https://github.com/anandhamurthy/Sociality/blob/master/screenshot/ss1.png)
-![Sociality](https://github.com/anandhamurthy/Sociality/blob/master/screenshot/ss2.png)
+![Selfie](https://github.com/anandhamurthy/SelfieTime/blob/master/screenshots/ss1.png)
+![Selfie](https://github.com/anandhamurthy/SelfieTime/blob/master/screenshots/ss2.png)
 
